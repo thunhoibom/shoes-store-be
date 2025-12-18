@@ -45,6 +45,3 @@ jobs:
         echo "   docker-compose -f docker-compose.full.yml up -d backend"
         echo ""
         echo "🎉 CI/CD pipeline working perfectly!"
-
-        # Simple wait for backend to start
-        timeout /t 30 /nobreak
