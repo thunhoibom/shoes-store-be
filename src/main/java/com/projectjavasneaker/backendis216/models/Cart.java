@@ -19,7 +19,7 @@ public class Cart {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-
+    //Test git push
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "cart",cascade = CascadeType.ALL)
     //@JoinColumn(name = "cart_id") // Tên cột khóa ngoại trong bảng CartDetails
     private List<CartDetails> cartDetails;
