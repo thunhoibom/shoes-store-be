@@ -13,6 +13,9 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
+    defaults:
+      run:
+        shell: cmd
 
     steps:
     - name: Checkout code
@@ -33,7 +36,7 @@ jobs:
           ${{ runner.os }}-maven-
 
     - name: Build with Maven
-      run: cmd /c "mvn clean package -DskipTests"
+      run: mvn clean package -DskipTests
 
     - name: Build Docker image
       run: docker build -t sneaker-backend:latest .
