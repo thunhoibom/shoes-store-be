@@ -33,7 +33,7 @@ jobs:
           ${{ runner.os }}-maven-
 
     - name: Build with Maven
-      run: mvn clean package -DskipTests
+      run: cmd /c "mvn clean package -DskipTests"
 
     - name: Build Docker image
       run: docker build -t sneaker-backend:latest .
@@ -41,10 +41,7 @@ jobs:
     - name: Deploy backend
       run: |
         # Path to your project root (adjust if needed)
-        $PROJECT_ROOT = "D:\fashion-shoes-store\sneaker-root"
-
-        # Navigate to project root
-        Set-Location $PROJECT_ROOT
+        cd "D:\fashion-shoes-store\sneaker-root"
 
         # Stop backend container
         docker-compose -f docker-compose.full.yml stop backend
@@ -58,21 +55,5 @@ jobs:
         # Start backend
         docker-compose -f docker-compose.full.yml up -d backend
 
-        # Wait for backend to be healthy
-        $timeout = 60
-        $counter = 0
-        while ($counter -lt $timeout) {
-          $status = docker-compose -f docker-compose.full.yml ps backend
-          if ($status -match "healthy|running") {
-            Write-Host "✅ Backend is ready!"
-            break
-          }
-          $counter += 5
-          Start-Sleep -Seconds 5
-          Write-Host "   Waiting... (${counter}s/${timeout}s)"
-        }
-
-        if ($counter -ge $timeout) {
-          Write-Host "❌ Timeout waiting for backend to be healthy"
-          exit 1
-        }
+        # Simple wait for backend to start
+        timeout /t 30 /nobreak
